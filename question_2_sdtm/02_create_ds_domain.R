@@ -1,5 +1,7 @@
 # -------------------------------------------------------------------------
-# Program: ds.R
+# Program: 02_create_ds_domain.R
+# Name: DS
+# Label: Subject Disposition
 # Description: Create Subject Disposition (DS) SDTM domain
 # Inputs:pharmaverseraw::ds_raw, pharmaversesdtm::dm
 # Output: ds
