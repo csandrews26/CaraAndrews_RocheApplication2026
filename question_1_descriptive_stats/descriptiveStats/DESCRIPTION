@@ -1,0 +1,14 @@
+Package: descriptiveStats
+Title: Descriptive Statistics Functions
+Version: 0.1.0
+Authors@R: 
+    person("Cara", "Andrews", , "carasiobhanandrews@gmail.com", role = c("aut", "cre"))
+Description: Package that provides functions for computing common descriptive statistics
+    including measures of central tendency (mean, median, mode) and spread (Q1, Q3, IQR).
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Suggests:
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
