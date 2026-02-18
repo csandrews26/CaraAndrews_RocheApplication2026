@@ -5,6 +5,7 @@ This repository is organised by the question tasks stated below.
 * Quesion 2 : SDTM DS Domain Creation using `{sdtm.oak}`
 * Question 3 : ADaM ADSL Dataset Creation
 * Quesion 4 :  TLG - Adverse Events Reporting
+* Question 5: Clinical Data API (FastAPI)
 
 ## Questions
 
@@ -25,6 +26,8 @@ This folder consists of the documents and files used to build the R package <cod
 
 #### Approach
 
+#### Challenges
+
 </details>
 
 <details>
@@ -39,6 +42,8 @@ This folder contains 2 files:
 
 #### Approach
 
+#### Challenges
+
 </details>
 
 <details>
@@ -52,6 +57,8 @@ This folder contains 2 files:
 - <code>adsl.rda</code> : The final exported ADSL dataset — output from <code>create_adsl.R</code>.
 
 #### Approach
+
+#### Challenges
 
 </details>
 
@@ -71,5 +78,24 @@ This folder contains 2 R scripts and 4 outputs produced by them:
   - <code>ae_listings.html</code> : AE listing created using <code>{gt}</code>, saved as an HTML file.
  
 #### Approach
+
+#### Challenges
+
+</details>
+
+<details>
+<summary>Question 5</summary>
+
+### question_5_api
+
+This folder contains 3 files:
+
+- <code>main.py</code> : Python script for the generation of FastAPI 
+- <code>adae.csv</code> : .csv file containing the ADAE dataset from the <code>{pharmaverseadam}</code> R package. This file was exported as a .csv file by running a separate R script.
+- <code>_pycashe_</code> : unkown
+ 
+#### Approach
+
+#### Challenges
 
 </details>
