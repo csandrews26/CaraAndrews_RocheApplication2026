@@ -119,7 +119,7 @@ ds_combined <- ds_combined %>%
   )
 
 # Map VISIT and VISITNUM --------------------------------------------------
-# Map variables using 'INSTANCE' and study_ct and 
+# Map variables using 'INSTANCE' and study_ct  
 ds_combined <- ds_combined %>%
   assign_ct(
     raw_dat = ds_raw,

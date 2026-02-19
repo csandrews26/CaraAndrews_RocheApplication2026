@@ -12,6 +12,7 @@ library(pharmaverseadam)
 library(dplyr)
 library(ggplot2)
 library(gtsummary)
+library(gt)
 
 ## load data
 adae <- pharmaverseadam::adae
