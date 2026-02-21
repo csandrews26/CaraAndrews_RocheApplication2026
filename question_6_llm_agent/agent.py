@@ -63,10 +63,11 @@ class ClinicalTrialDataAgent:
         """
         self.use_real_llm = use_real_llm
 
-        # Only relevant for real LLM integration, not needed for mock responses
+        # Only if use_real_llm is True
         if use_real_llm:
             self.client = OpenAI()  # Reads API key from environment if integrated
     
+    # LLM Parsing - Directs to Real or Mock LLM ------------
     def parse_question(self, user_question):
         """
         Send user question to LLM and get back structured JSON.
@@ -83,6 +84,7 @@ class ClinicalTrialDataAgent:
         else:
             return self._mock_llm_response(user_question)
     
+    # Parse question through real LLM with OpenAI ------------
     def _call_real_llm(self, user_question):
         """
         Call OpenAI API with the question.
@@ -117,30 +119,49 @@ Rules:
         llm_output = response.choices[0].message.content
         return json.loads(llm_output)
     
+ # Parse question through mock LLM ------------------ 
     def _mock_llm_response(self, user_question):
         """
         Mock LLM responses for testing without an API key.
-        In reality, you would train or prompt an LLM to do this dynamically.
+        Uses the actual dataset values to make intelligent guesses about column and value.
         """
         question_lower = user_question.lower()
-        
-        # Simple keyword matching
-        if "moderate" in question_lower or "severity" in question_lower:
-            if "moderate" in question_lower:
-                return {"target_column": "AESEV", "filter_value": "MODERATE"}
-            else:
-                return {"target_column": "AESEV", "filter_value": "MILD"}
-        
-        elif "headache" in question_lower:
-            return {"target_column": "AETERM", "filter_value": "HEADACHE"}
-        
-        elif "cardiac" in question_lower or "heart" in question_lower:
-            return {"target_column": "AESOC", "filter_value": "CARDIAC DISORDERS"}
-        
-        else:
-            # Default fallback
-            return {"target_column": "AESEV", "filter_value": "MODERATE"}
     
+        # Check if any AESEV values appear in the question
+        aesev_values = df["AESEV"].unique()
+        for value in aesev_values:
+            if value.lower() in question_lower:
+                return {"target_column": "AESEV", "filter_value": value}
+        
+        # Check for "severity" keyword (even if no specific value mentioned)
+        if "severity" in question_lower or "intensity" in question_lower or "serious" in question_lower:
+            # Default to MODERATE if severity mentioned but no specific value found
+            return {"target_column": "AESEV", "filter_value": "MODERATE"}
+        
+        # Check if any AETERM values appear in the question
+        aeterm_values = df["AETERM"].unique()
+        for term in aeterm_values:
+            # Check if the term (or a close match) appears
+            if term.lower() in question_lower or any(word in question_lower for word in term.lower().split()):
+                return {"target_column": "AETERM", "filter_value": term}
+        
+        # Check if any AESOC values appear in the question
+        aesoc_values = df["AESOC"].unique()
+        for soc in aesoc_values:
+            # Match keywords from the SOC name
+            keywords = soc.lower().split()
+            if any(keyword in question_lower for keyword in keywords if len(keyword) > 3):
+                return {"target_column": "AESOC", "filter_value": soc}
+        
+        # Fallback: if no match found
+        return {
+        "error": "Could not understand the question. Please mention a severity (MILD/MODERATE/SEVERE), "
+                 "a specific adverse event term, or a body system.",
+        "target_column": None,
+        "filter_value": None
+        }
+    
+    # Execute the query on the dataframe based on LLM output (filter df) ------------
     def execute_query(self, parsed_output):
         """
         Apply the LLM's output to filter the dataframe.
@@ -151,6 +172,14 @@ Rules:
         Returns:
             dict with subject_count and subjects list
         """
+        # Check if parsing failed (fallback was triggered)
+        if "error" in parsed_output:
+            return {
+                "error": parsed_output["error"],
+                "subject_count": 0,
+                "subjects": []
+            }
+
         target_column = parsed_output["target_column"]
         filter_value = parsed_output["filter_value"]
         
@@ -175,6 +204,7 @@ Rules:
             "subjects": unique_subjects
         }
     
+    # End-to-end method to ask a question and get results ------------
     def ask(self, user_question):
         """
         End-to-end: question → LLM parsing → dataframe filtering → results.
@@ -203,8 +233,8 @@ Rules:
 # Main execution block ---------------------------------------------------
 if __name__ == "__main__":
     
-    # Initialize agent
-    # Set use_real_llm=True if you have an OpenAI API key
+    # Initialise agent
+    # Set use_real_llm=True to integrate OpenAI API key
     agent = ClinicalTrialDataAgent(use_real_llm=False)
     
     # Test with 3 example questions
