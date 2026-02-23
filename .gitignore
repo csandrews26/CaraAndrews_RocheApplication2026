@@ -1,7 +1,17 @@
-.Rproj.user
+# --- R Specific ---
 .Rhistory
 .RData
 .Ruserdata
+.Rproj.user/
+*-Ex.R
+
+# --- Python Specific ---
 __pycache__/
 *.pyc
 venv/
+.env
+.pytest_cache/
+
+# --- OS Specific ---
+.DS_Store
+Thumbs.db
