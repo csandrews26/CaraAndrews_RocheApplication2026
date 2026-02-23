@@ -74,7 +74,7 @@ plot2 <- ggplot(ae_summary, aes(x = pct, y = AETERM)) +
   # Labels for title and axis
   labs(
     title    = "Top 10 Most Frequent Adverse Events",
-    subtitle = glue::glue("n = {n_total} subjects; 95% Clopper-Pierson CIs"),
+    subtitle = glue::glue("n = {n_total} subjects; 95% Clopper-Pearson CIs"),
     x        = "Percentage of Patients (%)",
     y        = NULL
   ) 
