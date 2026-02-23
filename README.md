@@ -315,10 +315,26 @@ This folder contains the R script and metadata for creating the Subject Disposit
 <br />
 </details>
 
+# 
+
+### Technical Reflection and Repository Evaluation
+
+#### Project Management & Traceability
+
+While this repository demonstrates technical execution (logical structure, comprehensive documentation, clear code comments, and descriptive commit histories), in future, I would implement the following industry-standard practices: 
+- **Issue Tracking:** Utilising GitHub Issues to define specific task requirements, track progress, and document resolutions for each output.
+- **Feature Branching Strategy:** Employing a branch-per-question model to isolate development for individual questions. This facilitates simplifies the peer-review (QC) process, and prevents the risk of code regression.
+
+These practices align with workflows in the clinical environment where there is multi-programmer collaboration. Proper branch management and issue documentation minimise merge conflicts and ensure traceability for regulatory submissions.
+
+#### Git & Infrastructure Challenges
+- **OS Environment:** Managing OS-specific metadata (e.g., <code>.DS_Store</code>), highlighted the importance of maintaining a comprehensive <code>.gitignore</code>.
+- **Package Architecture:** Integrating a formal R package structure within a nested repository required careful consideration of <code>.Rbuildignore</code> and <code>.gitignore</code> files, to ensure the wasn't unneccessary duplication of parent-directory metadata in the package.
+
 #
 
 > [!IMPORTANT]
-> **AI Disclosure & Usage Statement** <br />
+> **AI Disclosure & Usage Statement** <br /> <br />
 This technical assessment was completed with the support of Claude (Anthropic). This specific LLM was selected for its advanced proficiency in R programming, debugging, and interpreting complex error messages.
 > The AI was utilised for metholodical purposes such as providing guides for approaching unfamiliar tasks (e.g. development of a GenAI assistant), code optimisation and assistance deciphering R-specific console errors.
 > While AI was used to support the development process, all logic, statistical methods, and final outputs were independently verified, reviewed, and validated to ensure they meet CDISC standards and the specific requirements of the assessment. The final code reflects my own understanding and technical ability.
