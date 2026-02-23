@@ -26,7 +26,7 @@ ds_raw <- ds_raw %>%
   )
 
 # Read in study ct --------------------------------------------------------
-study_ct <- read.csv("~/CaraAndrews_RocheApplication2026/Question_2/sdtm_ct.csv")
+study_ct <- read.csv("~/CaraAndrews_RocheApplication2026/question_2_sdtm/sdtm_ct.csv")
 
 # Derive topic variable -----------------------------------------------------
 ds_mapped <-
@@ -164,3 +164,4 @@ ds <- ds_combined %>%
   dplyr::select(
     "STUDYID","DOMAIN", "USUBJID","DSSEQ", "DSTERM", "DSDECOD","DSCAT",  
     "VISITNUM","VISIT",  "DSDTC",  "DSSTDTC","DSSTDY")  
+
